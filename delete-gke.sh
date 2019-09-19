@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+set -e
 [ -z "${GOOGLE_CREDENTIALS}" ]  && echo >&2 "Need to set GOOGLE_CREDENTIALS"  && exit 1
 [ -z "${GCP_PROJECT}" ]         && echo >&2 "Need to set GCP_PROJECT"         && exit 1
 [ -z "${GCP_ZONE}" ]            && echo >&2 "Need to set GCP_ZONE"            && exit 1

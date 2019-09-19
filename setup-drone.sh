@@ -5,7 +5,7 @@
 # KUBERNETES_TOKEN
 # GCR_CREDENTIALS
 
-set -ex
+set -e
 
 add_or_update_drone() {
   SECRET_NAME=$1
@@ -44,8 +44,7 @@ val=$(cat "$GOOGLE_CREDENTIALS")
 add_or_update_drone gcr_credentials "${val}"
 
 # Add/Update API_SERVER
-API_SERVER=$(kubectl cluster-info | grep 'Kubernetes master' | awk -F' ' '{print $NF}' | sed 's/\x1b\[[^\x1b]*m//g')
-API_SERVER='https://35.194.42.53'
+API_SERVER=$(kubectl config view --template='{{ range .clusters }}{{ if eq .name "'$(kubectl config current-context)'" }}{{ .cluster.server }}{{ end }}{{ end }}')
 add_or_update_drone api_server "${API_SERVER}"
 
 # Add/update tiller token
